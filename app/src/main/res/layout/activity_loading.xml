@@ -21,18 +21,19 @@
         android:orientation="vertical"
         android:paddingHorizontal="40dp"> <!-- 两侧留更多空间 -->
 
-        <!-- 自定义进度条 -->
+
+
+        <!-- 加载文字 -->
         <ProgressBar
             android:id="@+id/loadingProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="0"
-        android:progressDrawable="@drawable/progress_bar_bordered"/>
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_bar_bordered" />
 
-        <!-- 加载文字 -->
         <TextView
             android:id="@+id/loadingTextView"
             android:layout_width="wrap_content"
@@ -44,4 +45,4 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
     </LinearLayout>
-</RelativeLayout>
+</RelativeLayout> 

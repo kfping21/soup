@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="popup_width">250dp</dimen>
+    <dimen name="popup_height">300dp</dimen>
+</resources>

@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="32dp"
-            android:text="海龟汤游戏登录"
+            android:text="登录"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -82,16 +82,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="同意用户协议和隐私政策"
+                android:text="同意"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/privacyPolicyLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户协议与隐私政策"
+                android:textColor="@color/blue_500"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="登录"
+            android:text="游戏登录"
             android:backgroundTint="@color/purple_500"
             android:textColor="@color/white"
             android:enabled="false"
