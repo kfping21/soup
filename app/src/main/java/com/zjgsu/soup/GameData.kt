@@ -10,5 +10,5 @@ data class GameData(
     val description: String,
     val answer: String,
     val difficulty: String,
-    val imageUrl: String
+    val tags: List<String>? = null // 新增标签字段
 ) : Parcelable

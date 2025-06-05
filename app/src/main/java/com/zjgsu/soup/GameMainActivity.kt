@@ -2,13 +2,13 @@ package com.zjgsu.soup
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.LinearInterpolator
+import android.view.animation.AlphaAnimation
 import android.view.animation.RotateAnimation
 import android.widget.Button
 import android.widget.ImageButton
@@ -18,6 +18,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.VideoView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class GameMainActivity : AppCompatActivity() {
+
 
     private lateinit var startGameButton: TextView
     private lateinit var loadingStatusText: TextView
@@ -48,10 +50,9 @@ class GameMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_main)
 
         startGameButton = findViewById(R.id.startGameButton)
-        loadingStatusText = findViewById(R.id.loadingStatusText)
         settingsButton = findViewById(R.id.settingsButton)
-        musicControlButton = findViewById(R.id.musicControlButton) // 新增
         backgroundVideo = findViewById(R.id.backgroundVideo)
+        loadingStatusText = findViewById(R.id.loadingStatusText)
 
 
         // 初始化音乐播放器
@@ -60,18 +61,10 @@ class GameMainActivity : AppCompatActivity() {
         initVideoBackground()
         //初始化视频播放器
 
-        // 初始化旋转动画
-        initRotationAnimation()
-
-        // 设置音乐控制按钮点击事件
-        musicControlButton.setOnClickListener {
-            toggleMusicPlayback()
-        }
+        setupBlinkingAnimation()
 
         startGameButton.setOnClickListener {
-            if (gameDataList.isNotEmpty()) {
-                navigateToQuestionActivity()
-            }
+            showDifficultyDialog() // 新增方法
         }
 
         // 设置按钮点击事件
@@ -82,44 +75,23 @@ class GameMainActivity : AppCompatActivity() {
         loadGameDataFromServer()
     }
 
+    private fun setupBlinkingAnimation() {
+        val blinkAnimation = AlphaAnimation(1f, 0.3f) // 从完全可见到半透明
+        blinkAnimation.duration = 1000 // 动画持续时间1秒
+        blinkAnimation.repeatCount = AlphaAnimation.INFINITE // 无限循环
+        blinkAnimation.repeatMode = AlphaAnimation.REVERSE // 反向播放，形成闪烁效果
+
+        startGameButton.startAnimation(blinkAnimation)
+    }
+
     private fun initMediaPlayer() {
         mediaPlayer = MediaPlayer.create(this, currentMusicId).apply {
             isLooping = true
-            setVolume(1.0f, 1.0f) // 原始值为0.5f，现提升到0.8f
+            setVolume(0.5f, 0.5f)
             start()
         }
     }
 
-    private fun initRotationAnimation() {
-        rotateAnimation = RotateAnimation(
-            0f, 360f,
-            Animation.RELATIVE_TO_SELF, 0.5f,
-            Animation.RELATIVE_TO_SELF, 0.5f
-        ).apply {
-            duration = 2000 // 2秒完成一圈
-            repeatCount = Animation.INFINITE // 无限循环
-            interpolator = LinearInterpolator() // 匀速旋转
-        }
-
-        // 开始动画
-        musicControlButton.startAnimation(rotateAnimation)
-    }
-    private fun toggleMusicPlayback() {
-        isMusicPlaying = !isMusicPlaying
-
-        if (isMusicPlaying) {
-            mediaPlayer.start()
-            // 恢复旋转动画
-            musicControlButton.startAnimation(rotateAnimation)
-        } else {
-            mediaPlayer.pause()
-            // 停止旋转动画
-            musicControlButton.clearAnimation()
-        }
-
-        // 更新设置弹窗中的按钮状态（如果弹窗开着）
-        updateSettingsPopupIfShowing()
-    }
 
     private fun initVideoBackground() {
         // 从raw资源加载视频（假设视频文件名为bg_video.mp4）
@@ -133,16 +105,6 @@ class GameMainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateSettingsPopupIfShowing() {
-        // 如果有设置弹窗显示，更新其中的播放/暂停按钮状态
-        try {
-            val popup = settingsButton.tag as? PopupWindow
-            val toggleButton = popup?.contentView?.findViewById<Button>(R.id.toggleMusicButton)
-            toggleButton?.text = if (isMusicPlaying) "暂停音乐" else "播放音乐"
-        } catch (e: Exception) {
-            // 忽略异常
-        }
-    }
 
 
     private fun showMusicSettingsPopup(anchorView: View) {
@@ -223,18 +185,17 @@ class GameMainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer.release()
+        startGameButton.clearAnimation()
     }
 
     private fun loadGameDataFromServer() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = RetrofitClient.instance.getGameData()
+                // 修改为获取所有题目（或指定默认难度）
+                val response = RetrofitClient.instance.getQuestionsByDifficulty("all")
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
                         gameDataList = response.body() ?: emptyList()
-                        updateUIAfterLoading()
-                    } else {
-                        showError("加载失败: ${response.message()}")
                     }
                 }
             } catch (e: Exception) {
@@ -245,28 +206,70 @@ class GameMainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUIAfterLoading() {
-        loadingStatusText.text = "成功加载${gameDataList.size}个题目"
-        startGameButton.isEnabled = true
-        startGameButton.alpha = 1.0f
-
-        Toast.makeText(
-            this,
-            "已加载${gameDataList.size}个题目，点击开始游戏",
-            Toast.LENGTH_SHORT
-        ).show()
-    }
 
     private fun showError(message: String) {
         loadingStatusText.text = message
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-    private fun navigateToQuestionActivity() {
-        // 创建Intent并传递数据
+    private fun loadQuestions(difficulty: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = RetrofitClient.instance.getQuestionsByDifficulty(difficulty)
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        val questions = response.body() ?: emptyList()
+                        if (questions.isNotEmpty()) {
+                            navigateToQuestionActivity(questions)
+                        } else {
+                            Toast.makeText(
+                                this@GameMainActivity,
+                                "该难度暂无题目",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@GameMainActivity,
+                        "加载失败: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun showDifficultyDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_difficulty, null)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        dialogView.findViewById<Button>(R.id.btnEasy).setOnClickListener {
+            loadQuestions("简单")
+            dialog.dismiss()
+        }
+
+        dialogView.findViewById<Button>(R.id.btnNormal).setOnClickListener {
+            loadQuestions("中等")
+            dialog.dismiss()
+        }
+
+        dialogView.findViewById<Button>(R.id.btnHard).setOnClickListener {
+            loadQuestions("困难")
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun navigateToQuestionActivity(questions: List<GameData>) {
         val intent = Intent(this, QuestionActivity::class.java).apply {
-            putParcelableArrayListExtra("question_list", ArrayList(gameDataList))
-            putExtra("current_index", 0)
+            putParcelableArrayListExtra("question_list", ArrayList(questions))
         }
         startActivity(intent)
     }

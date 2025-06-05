@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 难度标识 -->
+    <TextView
+        android:id="@+id/difficultyBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:padding="4dp"/>
+
+    <!-- 完整题目内容 -->
+    <TextView
+        android:id="@+id/fullQuestionText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:lineSpacingMultiplier="1.2"/>
+
+    <!-- 显示答案按钮 -->
+    <Button
+        android:id="@+id/showAnswerBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="显示汤底"/>
+
+    <!-- 标签显示 -->
+    <TextView
+        android:id="@+id/tagsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#666666"/>
+</LinearLayout>

@@ -62,4 +62,6 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
+
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 }

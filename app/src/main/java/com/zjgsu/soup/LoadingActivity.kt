@@ -1,6 +1,5 @@
 package com.zjgsu.soup
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler

@@ -1,70 +1,92 @@
 package com.zjgsu.soup
 
+// 修改导入语句（如果使用完整路径）
+import com.zjgsu.soup.QuestionDetailActivity
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.widget.Button
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlin.random.Random
 
 class QuestionActivity : AppCompatActivity() {
 
-    private lateinit var currentQuestion: GameData
-    private var currentIndex = 0
+    private lateinit var recyclerView: RecyclerView
     private lateinit var questions: List<GameData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
 
-        // 获取传递的数据
-        questions = intent.getParcelableArrayListExtra<GameData>("question_list") ?: emptyList()
-        currentIndex = intent.getIntExtra("current_index", 0)
+        questions = intent.getParcelableArrayListExtra("question_list") ?: emptyList()
 
-        if (questions.isNotEmpty()) {
-            showQuestion(currentIndex)
-            setupNavigationButtons()
-        } else {
-            Toast.makeText(this, "没有可用的题目", Toast.LENGTH_SHORT).show()
-            finish()
+        // 初始化RecyclerView
+        recyclerView = findViewById(R.id.questionsRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = QuestionAdapter(questions) { question ->
+            // 点击跳转到问答界面（修正括号）
+            startActivity(Intent(this, QuestionDetailActivity::class.java).apply {
+                putExtra("question", question)
+            })
         }
-    }
 
-    private fun showQuestion(index: Int) {
-        if (index in 0 until questions.size) {
-            currentQuestion = questions[index]
-            // 更新UI显示题目
-            findViewById<TextView>(R.id.questionTitle).text = currentQuestion.title
-            findViewById<TextView>(R.id.questionDescription).text = currentQuestion.description
-            // 使用Glide加载图片
-            Glide.with(this)
-                .load(currentQuestion.imageUrl)
-                .into(findViewById(R.id.questionImage))
-        }
-    }
-
-    private fun setupNavigationButtons() {
-        findViewById<Button>(R.id.nextButton).setOnClickListener {
-            if (currentIndex < questions.size - 1) {
-                showQuestion(++currentIndex)
-            } else {
-                Toast.makeText(this, "已经是最后一题", Toast.LENGTH_SHORT).show()
+        // 添加卡片间分割线（修正括号）
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
+                setDrawable(ContextCompat.getDrawable(this@QuestionActivity, R.drawable.divider)!!)
             }
-        }
-
-        findViewById<Button>(R.id.prevButton).setOnClickListener {
-            if (currentIndex > 0) {
-                showQuestion(--currentIndex)
-            }
-        }
-
-        findViewById<Button>(R.id.showAnswerButton).setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("答案")
-                .setMessage(currentQuestion.answer)
-                .setPositiveButton("确定", null)
-                .show()
-        }
+        )
     }
+}
+
+class QuestionAdapter(
+    private val questions: List<GameData>,
+    private val onItemClick: (GameData) -> Unit
+) : RecyclerView.Adapter<QuestionAdapter.ViewHolder>() {
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val title: TextView = view.findViewById(R.id.questionTitle)
+        val preview: TextView = view.findViewById(R.id.questionPreview)
+        val tags: TextView = view.findViewById(R.id.tagsText)
+        val difficulty: TextView = view.findViewById(R.id.difficultyBadge)
+        val rating: TextView = view.findViewById(R.id.ratingText)
+        val playCount: TextView = view.findViewById(R.id.playCountText)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_question_card, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val question = questions[position]
+
+        holder.title.text = question.title
+        holder.preview.text = question.description.take(100) + "..."
+        holder.tags.text = question.tags?.joinToString(" ") ?: ""
+        holder.difficulty.text = question.difficulty
+        val randomRating = String.format("%.1f分", 3.0 + Random.nextFloat() * 2.0)
+        holder.rating.text = randomRating // 例如 "4.7分"
+        holder.playCount.text = "${Random.nextInt(100, 1000)}人玩过"
+
+        // 设置难度颜色
+        holder.difficulty.setTextColor(when(question.difficulty) {
+            "简单" -> Color.GREEN
+            "中等" -> Color.BLUE
+            "困难" -> Color.RED
+            else -> Color.GRAY
+        })
+
+        holder.itemView.setOnClickListener { onItemClick(question) }
+    }
+
+    override fun getItemCount() = questions.size
 }

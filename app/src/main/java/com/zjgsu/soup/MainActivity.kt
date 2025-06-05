@@ -92,12 +92,13 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // 修改登录成功后的跳转
             if (validUsers[username] == password) {
                 errorTextView.text = ""
                 Toast.makeText(this, "登录成功，欢迎 $username", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, LoadingActivity::class.java)
+                val intent = Intent(this, WarningActivity::class.java) // 跳转到警告页
                 startActivity(intent)
-                finish()  // 这行很重要，关闭当前Activity
+                finish()
             }else {
                 errorTextView.text = "用户名或密码错误"
             }

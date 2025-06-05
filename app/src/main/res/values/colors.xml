@@ -14,4 +14,8 @@
     <color name="progress_silver_border">#C0C0C0</color>
     <color name="progress_track_gray">#E0E0E0</color>
     <color name="blue_700">#1976D2</color>
+    <color name="dark_background">#1A1A1A</color>
+    <color name="dark_primary">#2D2D2D</color>
+    <color name="accent_color">#FFD700</color>
+    <color name="gray_text">#AAAAAA</color>
 </resources>

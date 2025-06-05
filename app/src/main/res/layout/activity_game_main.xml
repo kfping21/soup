@@ -6,66 +6,73 @@
     android:background="@color/white"
     tools:context=".GameMainActivity">
 
+    <!-- 背景视频 -->
     <VideoView
         android:id="@+id/backgroundVideo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentBottom="true"/>
 
-    <!-- 设置按钮（固定在左上角） -->
+    <!-- 菜单按钮（固定在左上角） -->
     <ImageButton
         android:id="@+id/settingsButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:contentDescription="TODO"
-        android:src="@drawable/ic_settings"
-        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="16dp"/>
-
-    <ImageView
-        android:id="@+id/musicControlButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_music_note"
+        android:layout_margin="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="16dp"/>
+        android:contentDescription="菜单按钮"
+        android:src="@drawable/ic_menu"/>
 
-    <!-- 其他内容（居中显示） -->
+    <!-- 标题图片（固定在顶部） -->
+    <ImageView
+        android:id="@+id/gameTitleImage"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/game_title_text"/>
+
+    <!-- 底部按钮容器 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
         android:gravity="center"
         android:orientation="vertical">
 
-
-        <TextView
-            android:id="@+id/startGameButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="450dp"
-            android:text="开始游戏"
-            android:textColor="#2196F3"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:enabled="false"
-            android:alpha="0.5"/>
-
+        <!-- 加载状态文本 -->
         <TextView
             android:id="@+id/loadingStatusText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="正在加载题目..."
-            android:textColor="@color/black" />
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+        <!-- 开始游戏按钮 -->
+        <TextView
+            android:id="@+id/startGameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif-black"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:shadowColor="#00AAFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="12"
+            android:text="点击开始推理"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>
