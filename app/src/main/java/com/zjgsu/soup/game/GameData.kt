@@ -1,4 +1,4 @@
-package com.zjgsu.soup
+package com.zjgsu.soup.game
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

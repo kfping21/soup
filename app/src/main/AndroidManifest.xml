@@ -18,22 +18,28 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".LoadingActivity"
+            android:name=".game.LoadingActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".QuestionActivity"
+            android:name=".game.QuestionActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".GameMainActivity"
+            android:name=".game.GameMainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".WarningActivity"
+            android:name=".game.WarningActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".QuestionDetailActivity"
+            android:name=".game.QuestionDetailActivity"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".game.PrepareActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".game.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".game.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

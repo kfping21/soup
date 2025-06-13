@@ -1,7 +1,5 @@
-package com.zjgsu.soup
+package com.zjgsu.soup.game
 
-// 修改导入语句（如果使用完整路径）
-import com.zjgsu.soup.QuestionDetailActivity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -14,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.zjgsu.soup.R
 import kotlin.random.Random
 
 class QuestionActivity : AppCompatActivity() {
@@ -32,7 +31,7 @@ class QuestionActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = QuestionAdapter(questions) { question ->
             // 点击跳转到问答界面（修正括号）
-            startActivity(Intent(this, QuestionDetailActivity::class.java).apply {
+            startActivity(Intent(this, PrepareActivity::class.java).apply {
                 putExtra("question", question)
             })
         }

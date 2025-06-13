@@ -1,39 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/dark_background"
+    android:fitsSystemWindows="true">
 
-    <!-- 难度标识 -->
-    <TextView
-        android:id="@+id/difficultyBadge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:padding="4dp"/>
-
-    <!-- 完整题目内容 -->
-    <TextView
-        android:id="@+id/fullQuestionText"
+    <!-- 顶部标题栏 -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:lineSpacingMultiplier="1.2"/>
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/purple_700"
+        app:titleTextColor="@color/white"
+        app:titleCentered="true"/>
 
-    <!-- 显示答案按钮 -->
-    <Button
-        android:id="@+id/showAnswerBtn"
+    <!-- 绿色问题区域 -->
+    <ScrollView
+        android:id="@+id/questionScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="显示汤底"/>
-
-    <!-- 标签显示 -->
-    <TextView
-        android:id="@+id/tagsText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:textColor="#666666"/>
+        android:layout_marginBottom="8dp"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/green_card"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="2dp">
+
+            <TextView
+                android:id="@+id/fullQuestionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:maxLines="15"
+                android:scrollbars="vertical"/>
+        </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
+
+    <!-- 对话框区域 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/chat_background"
+        android:padding="8dp"/>
+
+    <!-- 补故事按钮 -->
+    <Button
+        android:id="@+id/completeStoryBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="补故事"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- 输入区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@color/input_background">
+
+        <EditText
+            android:id="@+id/inputField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="输入你的问题..."
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:textColor="@color/white"
+            android:textColorHint="@color/hint_color"/>
+
+        <Button
+            android:id="@+id/clueBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="线索"
+            android:backgroundTint="@color/blue_500"
+            android:textColor="@color/white"
+            android:layout_marginStart="8dp"/>
+
+        <Button
+            android:id="@+id/sendBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="发送"
+            android:backgroundTint="@color/green_500"
+            android:textColor="@color/white"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
 </LinearLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/loading"
-    tools:context=".LoadingActivity">
+    tools:context=".game.LoadingActivity">
 
     <!-- 半透明遮罩 -->
     <View

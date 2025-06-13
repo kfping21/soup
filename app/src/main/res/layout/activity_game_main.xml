@@ -4,7 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".GameMainActivity">
+    tools:context=".game.GameMainActivity">
+
+    <!-- 侧边菜单（固定在左侧） -->
+    <include
+        android:id="@+id/sideMenu"
+        layout="@layout/side_menu_layout"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible"/>
+
+    <!-- 遮罩层（仅覆盖右侧内容区域） -->
+    <View
+        android:id="@+id/menuOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/sideMenu"
+        android:background="#40000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"/>
 
     <!-- 背景视频 -->
     <VideoView

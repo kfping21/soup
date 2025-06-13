@@ -1,4 +1,4 @@
-package com.zjgsu.soup
+package com.zjgsu.soup.game
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,18 +12,36 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
+import com.zjgsu.soup.R
+import com.zjgsu.soup.game.util.SessionManager
+import kotlinx.coroutines.launch
 import java.util.Random
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var sessionManager: SessionManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        // 初始化SessionManager
+        sessionManager = SessionManager.getInstance(applicationContext)
+
+        // 如果用户已登录，直接进入警告页面
+        if (sessionManager.isLoggedIn()) {
+            startActivity(Intent(this, WarningActivity::class.java))
+            finish()
+            return
         }
 
         // 生成并显示随机版本号
@@ -45,9 +63,15 @@ class MainActivity : AppCompatActivity() {
 
         // 定义有效用户
         val validUsers = mapOf(
-            "panjiawei" to "2312190633",
-            "pingkaifei" to "2312190616"
+            "潘嘉伟" to "2312190633",
+            "平恺飞" to "2312190616"
         )
+
+        val registerLink = findViewById<TextView>(R.id.registerLink).also {
+            it.setOnClickListener {
+                startActivity(Intent(this, RegisterActivity::class.java))
+            }
+        }
 
         // 文本变化监听器
         val textWatcher = object : TextWatcher {
@@ -92,15 +116,23 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // 修改登录成功后的跳转
-            if (validUsers[username] == password) {
-                errorTextView.text = ""
-                Toast.makeText(this, "登录成功，欢迎 $username", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, WarningActivity::class.java) // 跳转到警告页
-                startActivity(intent)
-                finish()
-            }else {
-                errorTextView.text = "用户名或密码错误"
+            lifecycleScope.launch {
+                val db = AppDatabase.getDatabase(applicationContext)
+                val user = db.userDao().getUser(username, password)
+
+                runOnUiThread {
+                    if (user != null) {
+                        // 用户登录成功，保存用户会话信息
+                        sessionManager.createLoginSession(user.id.toString(), user.username)
+
+                        errorTextView.text = ""
+                        Toast.makeText(this@MainActivity, "登录成功，欢迎 $username", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@MainActivity, WarningActivity::class.java))
+                        finish()
+                    } else {
+                        errorTextView.text = "用户名或密码错误"
+                    }
+                }
             }
         }
     }

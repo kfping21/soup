@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="ai_question_text" type="id" />
+    <item name="chat_scroll_view" type="id" />
+    <item name="chat_container" type="id" />
+    <item name="input_field" type="id" />
+    <item name="input_container" type="id" />
+    <item name="submit_btn" type="id" />
+    <item name="progress_bar" type="id" />
+</resources>

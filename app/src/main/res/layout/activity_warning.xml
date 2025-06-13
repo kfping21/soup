@@ -8,86 +8,87 @@
     android:focusable="true">
 
     <!-- 顶部欢迎栏（深色风格） -->
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="48dp"
-android:background="#1F1F1F"
-    android:orientation="horizontal"
-    android:paddingHorizontal="16dp"
-    android:gravity="center_vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#1F1F1F"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:gravity="center_vertical">
 
-<TextView
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_weight="1"
-android:text="欢迎您，184****6762"
-android:textColor="#FFFFFF"
-    android:textSize="16sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="欢迎您，184****6762"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"/>
 
-<TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="切换"
-android:textColor="#1E90FF"
-android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/switchAccountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="切换"
+            android:textColor="#1E90FF"
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <!-- 声明内容 -->
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_centerInParent="true"
-android:orientation="vertical"
-android:padding="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="严正声明"
-    android:textColor="#FF0000"
-    android:textSize="20sp"
-    android:textStyle="bold"
-    android:gravity="center"
-    android:layout_marginBottom="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="严正声明"
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="本游戏可能存在诡异、刺激情节和画面，胆小、敏感者、有心脏疾病或心理疾病者慎入，未成年人禁止使用。"
-    android:textColor="#FFFFFF"
-android:textSize="16sp"
-android:lineSpacingMultiplier="1.2"
-android:layout_marginBottom="15dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="本游戏可能存在诡异、刺激情节和画面，胆小、敏感者、有心脏疾病或心理疾病者慎入，未成年人禁止使用。"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_marginBottom="15dp"/>
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="本游戏故事及情节纯属虚构，请勿模仿，如因此而发生任何问题责任由其使用者自行承担。"
-    android:textColor="#FFFFFF"
-android:textSize="16sp"
-android:lineSpacingMultiplier="1.2"
-android:layout_marginBottom="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="本游戏故事及情节纯属虚构，请勿模仿，如因此而发生任何问题责任由其使用者自行承担。"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_marginBottom="20dp"/>
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="请玩家详细阅读该声明并确认后再继续进行游戏。"
-    android:textColor="#FFFFFF"
-android:textSize="16sp"
-android:gravity="center"
-android:layout_marginBottom="30dp"/>
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请玩家详细阅读该声明并确认后再继续进行游戏。"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"/>
+    </LinearLayout>
 
     <!-- 闪烁的确认按钮 -->
-<TextView
-android:id="@+id/confirmButton"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_alignParentBottom="true"
-android:layout_marginBottom="40dp"
-android:text="点击确认"
-android:textColor="#FF0000"
-android:textSize="18sp"
-android:textStyle="bold"
-android:gravity="center"/>
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/confirmButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:text="点击确认"
+        android:textColor="#FF0000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+</RelativeLayout>

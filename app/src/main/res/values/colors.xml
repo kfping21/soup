@@ -18,4 +18,18 @@
     <color name="dark_primary">#2D2D2D</color>
     <color name="accent_color">#FFD700</color>
     <color name="gray_text">#AAAAAA</color>
+    <color name="chat_background">#1E1E1E</color>
+    <color name="input_background">#252525</color>
+    <color name="hint_color">#AAAAAA</color>
+    <color name="green_500">#4CAF50</color>
+    <!-- 绿色卡片背景 -->
+    <color name="green_card">#4CAF50</color>
+
+    <!-- AI消息卡片背景 -->
+    <color name="card_ai_background">#333333</color>
+
+    <!-- 文字颜色 -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#AAAAAA</color>
+    
 </resources>

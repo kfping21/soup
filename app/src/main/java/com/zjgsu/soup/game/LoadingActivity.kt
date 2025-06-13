@@ -1,4 +1,4 @@
-package com.zjgsu.soup
+package com.zjgsu.soup.game
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.os.Looper
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.zjgsu.soup.R
 
 class LoadingActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar

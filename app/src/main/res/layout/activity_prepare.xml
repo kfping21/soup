@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FF000000"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <!-- 题目标题（白色文字） -->
+<TextView
+android:id="@+id/titleTextView"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:textColor="#FFFFFFFF"
+    android:textSize="24sp"
+    android:textStyle="bold"
+    android:gravity="center"
+    android:layout_marginBottom="24dp"/>
+
+    <!-- 题目内容（汤面，白色文字） -->
+<TextView
+android:id="@+id/contentTextView"
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:layout_weight="1"
+android:textColor="#FFFFFFFF"
+    android:textSize="18sp"
+    android:gravity="center"
+    android:lineSpacingExtra="8dp"/>
+
+    <!-- 底部按钮（固定宽度，避免两侧留白过多） -->
+<LinearLayout
+android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_marginTop="24dp">
+
+    <!-- 返回按钮（蓝色） -->
+<Button
+android:id="@+id/backButton"
+android:layout_width="0dp"
+android:layout_height="48dp"
+android:layout_weight="1"
+android:backgroundTint="#FF2196F3"
+    android:textColor="#FFFFFFFF"
+    android:text="返回"/>
+
+    <!-- 间距 -->
+<View
+android:layout_width="16dp"
+android:layout_height="1dp"/>
+
+    <!-- 准备按钮（红色） -->
+<Button
+android:id="@+id/startButton"
+android:layout_width="0dp"
+android:layout_height="48dp"
+android:layout_weight="1"
+android:backgroundTint="#FFFF0000"
+    android:textColor="#FFFFFFFF"
+    android:text="准备"/>
+    </LinearLayout>
+    </LinearLayout>

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".MainActivity">
+    tools:context=".game.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -106,6 +106,23 @@
             android:enabled="false"
             android:alpha="0.5" />
 
+        <!-- 添加在loginButton之后，errorTextView之前 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">  <!-- 关键：右对齐 -->
+
+            <TextView
+                android:id="@+id/registerLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="没有账号？注册一个"
+                android:layout_marginEnd="8dp"
+                android:textSize="14sp"
+                android:textColor="@color/blue_500" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/errorTextView"
             android:layout_width="wrap_content"
@@ -114,6 +131,7 @@
             android:layout_marginTop="16dp"
             android:textColor="@color/red" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/versionTextView"
         android:layout_width="wrap_content"
